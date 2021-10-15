@@ -1,0 +1,22 @@
+{
+  "name": "3D BBox Interpolation",
+  "type": "app",
+  "categories": [
+    "pointcloud"
+  ],
+  "description": "Deploy interpolation method as REST API service",
+  "docker_image": "supervisely/base-py-sdk:6.1.101.1",
+  "main_script": "src/main.py",
+  "modal_template": "src/modal.html",
+  "modal_width": 700,
+  "task_location": "application_sessions",
+  "icon": "https://img.icons8.com/ios/100/000000/sine--v1.png",
+  "icon_cover": true,
+  "isolate": true,
+  "need_gpu": false,
+  "headless": true,
+  "instance_version": "6.4.15",
+  "session_tags": [
+    "sly_point_cloud_tracking"
+  ]
+}

@@ -26,6 +26,8 @@ def _interpolation_univariate_spline(x, y):
     :return:
     """
     k = len(x) - 1
+    if not np.all(np.diff(x) > 0):  # not monotonically increasing
+        x, y = x[::-1], y[::-1]  # reverse
     return interpolate.InterpolatedUnivariateSpline(x, y, k=k if k < 4 else 3)
 
 

@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import interpolate
+from scipy.spatial.transform import Rotation, Slerp
 
 
 # TODO: acceleration
@@ -8,16 +9,18 @@ from scipy import interpolate
 # TODO: Kalman filter interpolation !!!!
 # TODO: Curve Fitting
 
-def _interpolation_default(x, y):
-    """
-    Available:
-        ‘linear’, ‘nearest’, ‘nearest-up’, ‘zero’, ‘slinear’, ‘quadratic’, ‘cubic’, ‘previous’, ‘next’
-    """
-    return interpolate.interp1d(x, y, 'linear')
 
+def _interpolate_rotation(x, yaw):
+    rot_mat = np.zeros((yaw.size, 3))
+    rot_mat[:, 2] = yaw
 
-def _interpolation_cubic(x, y):
-    return interpolate.interp1d(x, y, 'cubic')
+    rots = Rotation.from_rotvec(rot_mat)
+    slerp = Slerp(x, rots)
+
+    def get_z(q):
+        return slerp(q).as_rotvec()[2]
+
+    return get_z
 
 
 def _interpolation_univariate_spline(x, y):
@@ -26,9 +29,14 @@ def _interpolation_univariate_spline(x, y):
     :return:
     """
     k = len(x) - 1
-    if not np.all(np.diff(x) > 0):  # not monotonically increasing
-        x, y = x[::-1], y[::-1]  # reverse
     return interpolate.InterpolatedUnivariateSpline(x, y, k=k if k < 4 else 3)
+
+
+def _const_interp(x, y):
+    def const_return(q):
+        return y[0]
+
+    return const_return
 
 
 def get_coords(figures):
@@ -42,28 +50,57 @@ def get_coords(figures):
     return np.asarray(coords)
 
 
-def interpolate_all(coords, track_len,
+def create_space(x, pointclouds_to_interp, request_pointcloud_ids):
+    space = np.linspace(x[0], x[-1], len(pointclouds_to_interp))
+    stock_x = [pointclouds_to_interp.index(a) for a in request_pointcloud_ids]
+    space[np.array(stock_x)] = np.array(x)
+    return space
+
+
+def interpolate_all(coords, pointclouds_to_interp, request_pointcloud_ids,
                     xy_interp_method=_interpolation_univariate_spline,
                     xz_interp_method=_interpolation_univariate_spline,
-                    rot_interp_method=_interpolation_univariate_spline):
+                    rot_interp_method=_interpolate_rotation):
     """
-    Simple straight forward interpolation.
+    Interpolate all values.
+    If x is decreasing - order will be inverted
+    If std(y) >= std(x):
     Uniformly accelerated motion is implied.
     :return: ndarray: [[x,y,z,yaw][x,y,z,yaw][x,y,z,yaw]]
     """
     x, y, z, yaw = coords.T
 
-    x_space = np.linspace(x[0], x[-1], track_len)
+    swap = False
+    if np.std(np.abs(y)) >= np.std(np.abs(x)):
+        x, y = y, x
+        swap = True
+
+    reverse = False
+    if not np.all(np.diff(x) > 0):  # not monotonically increasing
+        x, y, z, yaw = x[::-1], y[::-1], z[::-1], yaw[::-1]  # reverse
+        assert np.all(np.diff(x) > 0), "Both axis not monotonic"
+        reverse = True
+
+    if np.std(x) == 0:
+        xy_interp_method = _const_interp
+        xz_interp_method = _const_interp
+
+    x_space = create_space(x, pointclouds_to_interp, request_pointcloud_ids)
+
     xy_interp_f = xy_interp_method(x, y)
-    xy_coords = np.asarray([(x, xy_interp_f(x)) for x in x_space])
+    xy_coords = np.asarray([(k, xy_interp_f(k)) for k in x_space])
+    if swap:
+        xy_coords = np.flip(xy_coords, axis=1)
 
     z_interp_f = xz_interp_method(x, z)
-    z_coords = np.asarray([z_interp_f(x) for x in x_space])
+    z_coords = np.asarray([z_interp_f(k) for k in x_space])
 
     yaw_interp_f = rot_interp_method(x, yaw)
-    yaw_coords = np.asarray([yaw_interp_f(x) for x in x_space])
+    yaw_coords = np.asarray([yaw_interp_f(k) for k in x_space])
 
-    return np.column_stack((xy_coords, z_coords, yaw_coords))
+    res = np.column_stack((xy_coords, z_coords, yaw_coords))
+    res = res if not reverse else np.flip(res, axis=0)
+    return res
 
 
 def plot(true_coords, res_coords):

@@ -55,7 +55,8 @@ def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp
         geometry_json['rotation']['z'] = float(res_coords[i][3])
 
         g.api.pointcloud.figure.create(pc_id, source_figure.object_id, geometry_json, source_figure.geometry_type,
-                                       track_id=None)
+                                       track_id=g.track_id)
+
         sly.logger.info("Upload new figure")
 
 
@@ -68,7 +69,8 @@ def create_interpolated_figures(figures_ids, dataset_id):
     requested_figures, request_pointcloud_ids, pointclouds_to_interp = \
         get_interpolation_figures(figures_ids, dataset_id)
     true_coords = get_coords(requested_figures)
-    res_coords = interpolate_all(true_coords, len(pointclouds_to_interp))
+
+    res_coords = interpolate_all(true_coords, pointclouds_to_interp, request_pointcloud_ids)
     upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure=requested_figures[0])
 
 
@@ -79,6 +81,7 @@ def interpolate_figures_ids(api: sly.Api, task_id, context, state, app_logger):
     app_logger.debug("Input data", extra={"state": state})
     ds_id = state["dataset_id"]
     figures_ids = state["figures_ids"]
+    g.track_id = state["track_id"]
     create_interpolated_figures(figures_ids, ds_id)
     g.my_app.send_response(context["request_id"], data={"results": 1})
 

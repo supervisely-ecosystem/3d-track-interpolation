@@ -2,7 +2,8 @@ import functools
 
 import sly_globals as g
 import supervisely_lib as sly
-from interpolation import get_coords, interpolate_all
+from interpolation import get_coords, interpolate_all, plot
+from supervisely_lib.geometry.cuboid_3d import Cuboid3d, Vector3d
 
 
 def send_error_data(func):
@@ -44,17 +45,22 @@ def get_interpolation_figures(request_figures_id, dataset_id):
 
 
 def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure):
-    for i, pc_id in enumerate(pointclouds_to_interp):
+    for figure_idx, pc_id in enumerate(pointclouds_to_interp):
         if pc_id in request_pointcloud_ids:
             sly.logger.info("Skip keypoint figure in upload")
             continue  # skip existing keypoints
-        geometry_json = source_figure.geometry
-        geometry_json['position']['x'] = float(res_coords[i][0])
-        geometry_json['position']['y'] = float(res_coords[i][1])
-        geometry_json['position']['z'] = float(res_coords[i][2])
-        geometry_json['rotation']['z'] = float(res_coords[i][3])
 
-        g.api.pointcloud.figure.create(pc_id, source_figure.object_id, geometry_json, source_figure.geometry_type,
+        pos = Vector3d(float(res_coords[figure_idx][0]),
+                       float(res_coords[figure_idx][1]),
+                       float(res_coords[figure_idx][2]))
+        rot = Vector3d(0, 0, float(res_coords[figure_idx][3]))
+        dim = Cuboid3d.from_json(source_figure.geometry).dimensions
+        geometry = Cuboid3d(pos, rot, dim)
+
+        g.api.pointcloud.figure.create(pc_id,
+                                       source_figure.object_id,
+                                       geometry.to_json(),
+                                       source_figure.geometry_type,
                                        track_id=g.track_id)
 
         sly.logger.info("Upload new figure")

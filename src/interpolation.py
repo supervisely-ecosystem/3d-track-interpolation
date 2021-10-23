@@ -3,8 +3,6 @@ from scipy import interpolate
 from scipy.spatial.transform import Rotation, Slerp
 
 
-# TODO: acceleration
-# TODO: rotation according track
 # TODO: Bézier Splines
 # TODO: Kalman filter interpolation !!!!
 # TODO: Curve Fitting
@@ -51,9 +49,13 @@ def get_coords(figures):
 
 
 def create_space(x, pointclouds_to_interp, request_pointcloud_ids):
-    space = np.linspace(x[0], x[-1], len(pointclouds_to_interp))
-    stock_x = [pointclouds_to_interp.index(a) for a in request_pointcloud_ids]
-    space[np.array(stock_x)] = np.array(x)
+    time = np.arange(len(pointclouds_to_interp))
+    x_in_time = []
+    for i, pc_id in enumerate(request_pointcloud_ids):
+        x_in_time.append([pointclouds_to_interp.index(pc_id), x[i]])
+    x_time, x_in_time = np.asarray(x_in_time).T
+    iterp_f = _interpolation_univariate_spline(x_time, x_in_time)
+    space = np.asarray([iterp_f(x) for x in time])
     return space
 
 

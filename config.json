@@ -2,7 +2,10 @@
   "name": "3D BBox Interpolation",
   "type": "app",
   "categories": [
-    "pointcloud"
+    "neural network",
+    "pointclouds",
+    "interpolation",
+    "serve"
   ],
   "description": "Deploy interpolation method as REST API service",
   "docker_image": "supervisely/base-py-sdk:6.1.101.1",

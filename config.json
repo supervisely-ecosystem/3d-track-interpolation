@@ -13,7 +13,7 @@
   "modal_template": "src/modal.html",
   "modal_width": 700,
   "task_location": "application_sessions",
-  "icon": "https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/48245050/e42d0d95-3ac3-422c-b675-4a5d8df4dd95",
+  "icon": "https://github-production-user-asset-6210df.s3.amazonaws.com/48245050/251071032-e42d0d95-3ac3-422c-b675-4a5d8df4dd95.png",
   "icon_cover": true,
   "isolate": true,
   "need_gpu": false,

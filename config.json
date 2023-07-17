@@ -17,6 +17,7 @@
   "icon_cover": true,
   "isolate": true,
   "need_gpu": false,
+  "gpu": "preferred",
   "headless": true,
   "instance_version": "6.4.15",
   "session_tags": [

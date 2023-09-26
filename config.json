@@ -10,8 +10,6 @@
   "description": "Deploy interpolation method as REST API service",
   "docker_image": "supervisely/base-py-sdk:6.35.0",
   "main_script": "src/main.py",
-  "modal_template": "src/modal.html",
-  "modal_width": 700,
   "task_location": "application_sessions",
   "icon": "https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/48245050/e42d0d95-3ac3-422c-b675-4a5d8df4dd95",
   "icon_cover": true,

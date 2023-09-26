@@ -84,12 +84,12 @@ def create_interpolated_figures(figures_ids, dataset_id):
 @sly.timeit
 @send_error_data
 def interpolate_figures_ids(api: sly.Api, task_id, context, state, app_logger):
-    app_logger.debug("Input data", extra={"state": state})
-    ds_id = state["dataset_id"]
-    figures_ids = state["figures_ids"]
-    g.track_id = state["track_id"]
+    app_logger.debug("Input data", extra={"state": state, "context": context})
+    ds_id = context["datasetId"]
+    figures_ids = context["figureIds"]
+    g.track_id = context["trackId"]
     create_interpolated_figures(figures_ids, ds_id)
-    g.my_app.send_response(context["request_id"], data={"results": 1})
+    g.my_app.send_response(context["requestId"], data={"results": 1})
 
 
 def test_run():

@@ -44,7 +44,9 @@ def get_interpolation_figures(request_figures_id, dataset_id):
     return requested_figures, request_pointcloud_ids, pointclouds_to_interp
 
 
-def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure):
+def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure, dataset_id):
+    current_pos = 0
+    total = len(pointclouds_to_interp) - len(request_pointcloud_ids)
     for figure_idx, pc_id in enumerate(pointclouds_to_interp):
         if pc_id in request_pointcloud_ids:
             sly.logger.info("Skip keypoint figure in upload")
@@ -62,7 +64,18 @@ def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp
                                        geometry.to_json(),
                                        source_figure.geometry_type,
                                        track_id=g.track_id)
-
+        current_pos += 1
+        g.api.post(
+            "point-clouds.episodes.notify-annotation-tool",
+            {
+                "type": "point-cloud-episodes:fetch-figures-in-range",
+                "data": {"trackId": g.track_id,
+                         "datasetId": dataset_id,
+                         "pointCloudIds": pointclouds_to_interp,
+                         "progress": {"current": current_pos, "total": total},
+                },
+            },
+        )
         sly.logger.info("Upload new figure")
 
 
@@ -77,7 +90,7 @@ def create_interpolated_figures(figures_ids, dataset_id):
     true_coords = get_coords(requested_figures)
 
     res_coords = interpolate_all(true_coords, pointclouds_to_interp, request_pointcloud_ids)
-    upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure=requested_figures[0])
+    upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, requested_figures[0], dataset_id)
 
 
 @g.my_app.callback("interpolate_figures_ids")

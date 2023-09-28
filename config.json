@@ -16,7 +16,7 @@
   "isolate": true,
   "need_gpu": false,
   "headless": true,
-  "instance_version": "6.4.15",
+  "instance_version": "6.8.35",
   "session_tags": [
     "sly_point_cloud_tracking"
   ],

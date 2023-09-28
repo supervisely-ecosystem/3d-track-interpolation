@@ -1,6 +1,6 @@
 <div align="center" markdown> 
 
-# 3D Track Interpolation
+# 3D BBox Interpolation
   
 <p align="center">
   <a href="#Overview">Overview</a> •

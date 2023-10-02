@@ -1,6 +1,6 @@
 <div align="center" markdown> 
 
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5df84000-310d-40e5-9cd8-f495015446e8" />
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/9cededfd-de4a-477f-9173-e445186403f4" />
 
 # 3D BBox Interpolation
   

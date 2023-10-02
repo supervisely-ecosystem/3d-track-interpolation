@@ -1,6 +1,6 @@
 <div align="center" markdown> 
 
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/9cededfd-de4a-477f-9173-e445186403f4" />
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/08eed5f6-0775-4380-9233-3fc9b2752533" />
 
 # 3D BBox Interpolation
   
@@ -26,7 +26,7 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 1. Start the application from Ecosystem.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/mbptrack3d/supervisely_integration/serve" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/d4bcf602-4183-45bf-acfe-fd777077e6a8" width="500px" style='padding-bottom: 20px'/> 
+<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/mbptrack3d/supervisely_integration/serve" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/ed3adf13-b716-47ed-a1e3-9e034312c819" width="500px" style='padding-bottom: 20px'/> 
 
 2. Run the app on an agent with `GPU`. For **Community Edition** - users have to run the app on their own GPU computer connected to the platform. Watch this [video tutorial](https://youtu.be/aO7Zc4kTrVg).
 

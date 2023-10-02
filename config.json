@@ -13,7 +13,7 @@
   "task_location": "application_sessions",
   "icon": "https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/48245050/e42d0d95-3ac3-422c-b675-4a5d8df4dd95",
   "icon_cover": true,
-  "poster": "https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5df84000-310d-40e5-9cd8-f495015446e8",
+  "poster": "https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/9cededfd-de4a-477f-9173-e445186403f4",
   "isolate": true,
   "need_gpu": false,
   "headless": true,

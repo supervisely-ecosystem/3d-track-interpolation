@@ -20,7 +20,7 @@
 
 # Overview 
 
-This app is used to track the movement and position of 3D bounding boxes within a point cloud. This application uses spline interpolation to estimate the position of an object between two known data points in order to accurately track its movement over time.
+This app is used to track the movement and position of 3D bounding boxes within a point cloud. The application uses spline interpolation to estimate the position of an object between two known data points in order to accurately track its movement over time.
 
 # How To Run
 

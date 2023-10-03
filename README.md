@@ -59,7 +59,7 @@ Frames #18, #25, #30 contains figures of 3 different objects.
 
 # Result
    
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/eedece6c-accc-4262-97f6-49d0593e55dd.gif" />
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/eedece6c-accc-4262-97f6-49d0593e55dd" />
 
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5f2a33f5-5306-400e-81e3-4994ad7fd124.gif" />
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5f2a33f5-5306-400e-81e3-4994ad7fd124" />
 

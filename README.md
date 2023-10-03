@@ -36,7 +36,9 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 5. Choose the start frame (or range of frames via the `Select` tool), in track settings select running **3D BBox Interpolation** app, direction, and number of frames
 
-6. Click `Interpolate` button. When a figure on the starting frame is selected, tracking begins for that figure. If no figures are selected, tracking starts for all of the figures on the frame. Be aware that tracking will not work if some class has only a figure in the start frame and none in the tracking direction.
+6. Click `Interpolate` button. When a figure on the starting frame is selected, tracking begins for that figure. Be aware that interpolating will not work if some class has only a figure in the start frame and none in the tracking direction.
+
+https://user-images.githubusercontent.com/119248312/85c6bfc1-ee9e-4a78-850a-75749da17b81.mp4
 
 # Track Examples
 
@@ -53,4 +55,11 @@ Frames #18, #25, #30 contains figures of 3 different objects.
 | Object #1 | 18, 25, 30         | 18-27, forward | New figures will appear at frames 18-27                                       |
 | Object #2 | 18, 25             | 18-27, forward | New figures will appear at frames 18-25                                       |
 | Object #3 | 18                 | 18-27, forward | Tracking will fail because object #3 lacks sufficient data for interpolation. |
+
+
+# Result
+   
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/eedece6c-accc-4262-97f6-49d0593e55dd.gif" />
+
+<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5f2a33f5-5306-400e-81e3-4994ad7fd124.gif" />
 

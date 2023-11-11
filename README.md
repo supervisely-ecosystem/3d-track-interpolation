@@ -26,7 +26,7 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 1. Start the application from Ecosystem.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/mbptrack3d/supervisely_integration/serve" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/ed3adf13-b716-47ed-a1e3-9e034312c819" width="1000px" style='padding-bottom: 20px'/> 
+<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/3d-track-interpolation" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/ed3adf13-b716-47ed-a1e3-9e034312c819" width="500px" style='padding-bottom: 20px'/> 
 
 2. This app can be run only on your own agent. Watch [video](https://www.youtube.com/watch?v=aO7Zc4kTrVg) to learn how to connect your computer to Supervisely.
 
@@ -38,7 +38,7 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 6. Click `Interpolate` button. When a figure on the starting frame is selected, tracking begins for that figure. Be aware that interpolating will not work if some class has only a figure in the start frame and none in the tracking direction.
 
-<a data-key="sly-embeded-video-link" href="https://youtu.be/ked5SFLjfRU" data-video-code="ked5SFLjfRU"> <img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/b5490e95-580f-46a4-acb1-b60339eb86b0" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:100%;"> </a> 
+<a data-key="sly-embeded-video-link" href="https://youtu.be/ked5SFLjfRU" data-video-code="ked5SFLjfRU"> <img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/b5490e95-580f-46a4-acb1-b60339eb86b0" alt="SLY_EMBEDED_VIDEO_LINK"> </a> 
 
 # Track Examples
 

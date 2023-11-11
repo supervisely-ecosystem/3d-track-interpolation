@@ -38,7 +38,7 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 6. Click `Interpolate` button. When a figure on the starting frame is selected, tracking begins for that figure. Be aware that interpolating will not work if some class has only a figure in the start frame and none in the tracking direction.
 
-https://user-images.githubusercontent.com/119248312/272378184-85c6bfc1-ee9e-4a78-850a-75749da17b81.mp4
+<a data-key="sly-embeded-video-link" href="https://youtu.be/ked5SFLjfRU" data-video-code="ked5SFLjfRU"> <img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/b5490e95-580f-46a4-acb1-b60339eb86b0" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:100%;"> </a> 
 
 # Track Examples
 
@@ -59,7 +59,5 @@ Frames #18, #25, #30 contains figures of 3 different objects.
 
 # Result
    
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/eedece6c-accc-4262-97f6-49d0593e55dd" />
-
-<img src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/119248312/5f2a33f5-5306-400e-81e3-4994ad7fd124" />
+https://user-images.githubusercontent.com/119248312/282230125-c6496e5d-685b-4cbc-be14-f674aeb3250f.mp4
 

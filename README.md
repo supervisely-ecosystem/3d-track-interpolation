@@ -26,7 +26,7 @@ This app is used to track the movement and position of 3D bounding boxes within 
 
 1. Start the application from Ecosystem.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/mbptrack3d/supervisely_integration/serve" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/ed3adf13-b716-47ed-a1e3-9e034312c819" width="500px" style='padding-bottom: 20px'/> 
+<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/mbptrack3d/supervisely_integration/serve" src="https://github.com/supervisely-ecosystem/3d-track-interpolation/assets/115161827/ed3adf13-b716-47ed-a1e3-9e034312c819" width="1000px" style='padding-bottom: 20px'/> 
 
 2. This app can be run only on your own agent. Watch [video](https://www.youtube.com/watch?v=aO7Zc4kTrVg) to learn how to connect your computer to Supervisely.
 

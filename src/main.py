@@ -20,11 +20,11 @@ def send_error_data(func):
     return wrapper
 
 
-def get_interpolation_figures(request_figures_id, dataset_id):
-    pointclouds = sorted(g.api.pointcloud.get_list(dataset_id), key=lambda x: x.name)
+def get_interpolation_figures(api, request_figures_id, dataset_id):
+    pointclouds = sorted(api.pointcloud.get_list(dataset_id), key=lambda x: x.name)
     pointcloud_ids = [x.id for x in pointclouds]
 
-    requested_figures = g.api.pointcloud.figure.get_by_ids(dataset_id, request_figures_id)
+    requested_figures = api.pointcloud.figure.get_by_ids(dataset_id, request_figures_id)
     request_pointcloud_ids = [fig.entity_id for fig in requested_figures]
 
     first_cloud = pointcloud_ids.index(request_pointcloud_ids[0])  # firtst cloud
@@ -44,7 +44,7 @@ def get_interpolation_figures(request_figures_id, dataset_id):
     return requested_figures, request_pointcloud_ids, pointclouds_to_interp
 
 
-def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure, dataset_id):
+def upload_new_figures(api, res_coords, request_pointcloud_ids, pointclouds_to_interp, source_figure, dataset_id):
     current_pos = 0
     total = len(pointclouds_to_interp) - len(request_pointcloud_ids)
     for figure_idx, pc_id in enumerate(pointclouds_to_interp):
@@ -59,13 +59,13 @@ def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp
         dim = Cuboid3d.from_json(source_figure.geometry).dimensions
         geometry = Cuboid3d(pos, rot, dim)
 
-        g.api.pointcloud.figure.create(pc_id,
+        api.pointcloud.figure.create(pc_id,
                                        source_figure.object_id,
                                        geometry.to_json(),
                                        source_figure.geometry_type,
                                        track_id=g.track_id)
         current_pos += 1
-        g.api.post(
+        api.post(
             "point-clouds.episodes.notify-annotation-tool",
             {
                 "type": "point-cloud-episodes:fetch-figures-in-range",
@@ -79,18 +79,18 @@ def upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp
         sly.logger.info("Upload new figure")
 
 
-def create_interpolated_figures(figures_ids, dataset_id):
+def create_interpolated_figures(api, figures_ids, dataset_id):
     """
     :param figures_ids: list of figures IDs
     """
     assert len(figures_ids) > 1, "len figures < 2"
 
     requested_figures, request_pointcloud_ids, pointclouds_to_interp = \
-        get_interpolation_figures(figures_ids, dataset_id)
+        get_interpolation_figures(api, figures_ids, dataset_id)
     true_coords = get_coords(requested_figures)
 
     res_coords = interpolate_all(true_coords, pointclouds_to_interp, request_pointcloud_ids)
-    upload_new_figures(res_coords, request_pointcloud_ids, pointclouds_to_interp, requested_figures[0], dataset_id)
+    upload_new_figures(api, res_coords, request_pointcloud_ids, pointclouds_to_interp, requested_figures[0], dataset_id)
 
 
 @g.my_app.callback("interpolate_figures_ids")
@@ -101,7 +101,7 @@ def interpolate_figures_ids(api: sly.Api, task_id, context, state, app_logger):
     ds_id = context["datasetId"]
     figures_ids = context["figureIds"]
     g.track_id = context["trackId"]
-    create_interpolated_figures(figures_ids, ds_id)
+    create_interpolated_figures(api, figures_ids, ds_id)
     g.my_app.send_response(context["request_id"], data={"results": 1})
 
 

@@ -102,7 +102,7 @@ def interpolate_figures_ids(api: sly.Api, task_id, context, state, app_logger):
     figures_ids = context["figureIds"]
     g.track_id = context["trackId"]
     create_interpolated_figures(figures_ids, ds_id)
-    g.my_app.send_response(context["requestId"], data={"results": 1})
+    g.my_app.send_response(context["request_id"], data={"results": 1})
 
 
 def test_run():

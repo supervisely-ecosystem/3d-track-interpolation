@@ -20,11 +20,11 @@ def send_error_data(func):
     return wrapper
 
 
-def get_interpolation_figures(request_figures_id, dataset_id):
-    pointclouds = sorted(g.api.pointcloud.get_list(dataset_id), key=lambda x: x.name)
+def get_interpolation_figures(api, request_figures_id, dataset_id):
+    pointclouds = sorted(api.pointcloud.get_list(dataset_id), key=lambda x: x.name)
     pointcloud_ids = [x.id for x in pointclouds]
 
-    requested_figures = g.api.pointcloud.figure.get_by_ids(dataset_id, request_figures_id)
+    requested_figures = api.pointcloud.figure.get_by_ids(dataset_id, request_figures_id)
     request_pointcloud_ids = [fig.entity_id for fig in requested_figures]
 
     first_cloud = pointcloud_ids.index(request_pointcloud_ids[0])  # firtst cloud
@@ -59,7 +59,7 @@ def upload_new_figures(api, res_coords, request_pointcloud_ids, pointclouds_to_i
         dim = Cuboid3d.from_json(source_figure.geometry).dimensions
         geometry = Cuboid3d(pos, rot, dim)
 
-        g.api.pointcloud.figure.create(pc_id,
+        api.pointcloud.figure.create(pc_id,
                                        source_figure.object_id,
                                        geometry.to_json(),
                                        source_figure.geometry_type,
@@ -86,7 +86,7 @@ def create_interpolated_figures(api, figures_ids, dataset_id):
     assert len(figures_ids) > 1, "len figures < 2"
 
     requested_figures, request_pointcloud_ids, pointclouds_to_interp = \
-        get_interpolation_figures(figures_ids, dataset_id)
+        get_interpolation_figures(api, figures_ids, dataset_id)
     true_coords = get_coords(requested_figures)
 
     res_coords = interpolate_all(true_coords, pointclouds_to_interp, request_pointcloud_ids)

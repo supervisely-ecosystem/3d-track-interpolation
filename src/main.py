@@ -1,9 +1,9 @@
 import functools
 
 import sly_globals as g
-import supervisely_lib as sly
+import supervisely as sly
 from interpolation import get_coords, interpolate_all, plot
-from supervisely_lib.geometry.cuboid_3d import Cuboid3d, Vector3d
+from supervisely.geometry.cuboid_3d import Cuboid3d, Vector3d
 
 
 def send_error_data(func):

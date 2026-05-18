@@ -1,1 +1,2 @@
 supervisely==6.73.564
+scipy==1.17.1
